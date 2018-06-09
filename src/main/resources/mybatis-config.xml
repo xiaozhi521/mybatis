@@ -3,8 +3,25 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <!-- 文件的配置顺序 -->
+    <!--
+        properties, settings, typeAliases, typeHandlers, objectFactory, objectWrapperFactory,
+        reflectorFactory, plugins, environments, databaseIdProvider, mappers
+    -->
+
     <!-- 引用db.properties配置文件 -->
     <properties resource="db.properties"/>
+
+    <!-- 配置实体类的别名，配置实体类别名的目的是为了在引用实体类时可以使用实体类的别名来代替实体类，达到简写的目的 -->
+    <typeAliases>
+        <!--  第一种方式 ： 为实体类com.org.bean.User配置一个别名_User -->
+        <!-- <typeAlias type="com.org.bean.User" alias="_User"/> -->
+
+        <!-- 第二种方式 ：   为org.bean包下的所有实体类配置别名，MyBatis默认的设置别名的方式就是去除类所在的包后的简单的类名-->
+        <!--比如com.org.bean.User 这个实体类的别名就会被设置成 User -->
+        <package name="com.org.bean"/>
+    </typeAliases>
+
     <!--
         development : 开发模式
         work : 工作模式
@@ -22,18 +39,19 @@
             </dataSource>
         </environment>
     </environments>
-    <!-- 配置实体类的别名，配置实体类别名的目的是为了在引用实体类时可以使用实体类的别名来代替实体类，达到简写的目的 -->
-    <typeAliases>
-        <!-- 为实体类me.gacl.domain.User配置一个别名_User -->
-        <!-- <typeAlias type="org.bean.KaoTi" alias="_KaoTi"/> -->
+    <!-- 配置mapper文件
+        第一种 ： mapper
+            resource : 使用相对于类路径的资源
+            class : 使用相对于注解的资源
+            url : 使用完全限定路径
+        第二种：使用包资源   package
+                <package name="com.org.dao"></package>
+    -->
 
-        <!-- 为org.bean包下的所有实体类配置别名，MyBatis默认的设置别名的方式就是去除类所在的包后的简单的类名-->
-        <!--比如org.bean.KaoTi这个实体类的别名就会被设置成KaoTi-->
-        <!--&ndash;&gt;-->
-        <package name="com.org.bean"/>
-    </typeAliases>
-    <!-- 配置mapper文件 -->
     <mappers>
-        <mapper resource="org/mapper/kaoTiMapper.xml"/>
+        <mapper resource="com/org/mapper/userMapper.xml"/>
+        <mapper class="com.org.dao.UserMapper"/>
+        <!--<package name="com.org.dao"></package>-->
     </mappers>
+
 </configuration>
