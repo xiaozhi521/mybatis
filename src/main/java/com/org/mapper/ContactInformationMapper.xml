@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.ContactInformationMapper">
+    <!--5、解决字段名与实体类属性名不相同的冲突-->
+    <!--方式一: 通过在sql语句中定义别名-->
+    <select id="getContactInformationrById" parameterType="int" resultType="ContactInformation">
+        select c_id id , c_tel tel ,c_email email from contactinformation where c_id = #{id}
+    </select>
+    <!--方式二: 通过<resultMap>-->
+    <select id="getContactInformationrById_1" parameterType="int" resultMap="informationResultMap">
+        select * from contactinformation where c_id = #{id}
+    </select>
+    <resultMap id="informationResultMap" type="ContactInformation">
+        <id property="id" column="c_id"/>
+        <result property="tel" column="c_tel"/>
+        <result property="email" column="c_email"/>
+        <!--<result property="user" column="user_id"/>-->
+    </resultMap>
+    <!--    6.1、一对一关联
+        association : 用于一对一的关联查询
+        property : 对象的属性名称
+        javaType ： 对象的属性类型
+        column ： 所对应的外键字段名称
+        select ：使用另一个查询封装的结果
+    -->
+    <!--
+        方式一：嵌套结果：使用嵌套结果映射来处理重复的联合结果的子集
+         封装联表查询的数据(去除重复的数据)
+        SELECT * from contactinformation c,user u WHERE c.user_id = u.id and c.user_id = 1
+        SELECT * from contactinformation c JOIN user u on c.user_id = u.id where c.user_id = 1
+    -->
+    <select id="getContactInformation_User_ById" parameterType="int" resultMap="info_user_redsut_map">
+        SELECT * FROM contactinformation WHERE c_id = #{id}
+    </select>
+    <resultMap id="info_user_redsut_map" type="ContactInformation">
+        <id property="id" column="c_id"/>
+        <result property="tel" column="c_tel"/>
+        <result property="email" column="c_email"/>
+        <association property="user" javaType="User">
+            <id property="id" column="user_id"/>
+            <result property="userName" column="userName"/>
+            <result property="sex" column="sex"/>
+            <result property="birthday" column="birthday"/>
+            <result property="address" column="address"/>
+            <result property="createtime" column="createtime"/>
+        </association>
+    </resultMap>
+    <!--
+        方式二：嵌套查询：通过执行另外一个SQL映射语句来返回预期的复杂类型
+        SELECT * FROM contactinformation WHERE c_id=1;
+        SELECT * FROM user WHERE id=1   //1 是上一个查询得到的user_id的值
+    -->
+    <select id="getInformation" parameterType="int" resultMap="info_user_redsut_map2">
+        select * from contactinformation where c_id=#{id}
+    </select>
+    <select id="getUser" parameterType="int" resultType="User">
+        SELECT * FROM user WHERE id=#{id}
+    </select>
+    <resultMap id="info_user_redsut_map2" type="ContactInformation">
+        <id property="id" column="c_id"/>
+        <result property="tel" column="c_tel"/>
+        <result property="email" column="c_email"/>
+        <association property="user" column="user_id" select="getUser"/>
+    </resultMap>
+</mapper>

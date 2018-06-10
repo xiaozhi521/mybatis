@@ -50,6 +50,7 @@
 
     <mappers>
         <mapper resource="com/org/mapper/userMapper.xml"/>
+        <mapper resource="com/org/mapper/ContactInformationMapper.xml"/>
         <mapper class="com.org.dao.UserMapper"/>
         <!--<package name="com.org.dao"></package>-->
     </mappers>
