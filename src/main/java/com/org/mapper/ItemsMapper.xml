@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.ItemsMapper">
+    <!--7、动态SQL与模糊查询-->
+    <select id="seachKeyWord" parameterType="ConditionItems" resultType="Items">
+      select * from Items
+        <if test="keyword != null">
+            where itemName like #{keyword}
+        </if>
+    </select>
+
+</mapper>
