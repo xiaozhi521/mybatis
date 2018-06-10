@@ -1,6 +1,7 @@
 package com.org.bean;
 
 import java.util.Date;
+import java.util.List;
 
 public class User {
     private int id;
@@ -12,6 +13,8 @@ public class User {
     private char sex;
 
     private String address;
+
+    private List<Items> items;
 
     private Date createtime;
 
@@ -63,6 +66,14 @@ public class User {
         this.createtime = createtime;
     }
 
+    public List<Items> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Items> items) {
+        this.items = items;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -72,6 +83,7 @@ public class User {
                 ", sex=" + sex +
                 ", address='" + address + '\'' +
                 ", createtime=" + createtime +
+                ", items=" + items +
                 '}';
     }
 }

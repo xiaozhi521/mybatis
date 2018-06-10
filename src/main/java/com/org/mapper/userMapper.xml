@@ -19,4 +19,56 @@
     <delete id="deleteUserById" parameterType="int">
         DELETE FROM user WHERE id = #{id}
     </delete>
+
+    <!--
+        6.2、一对多关联查询
+        collection ： 做一对多关联查询的
+        ofType ： 指定集合中元素对象的类型
+    -->
+    <!--
+        方式一: 嵌套结果: 使用嵌套结果映射来处理重复的联合结果的子集
+        SELECT * from user u, items i where u.id = i.userId and u.id = 1
+    -->
+    <select id="getUserMany" parameterType="int" resultMap="UserResultMap2">
+        SELECT * from user u, items i where u.id = i.userId and u.id = #{id}
+    </select>
+    <resultMap type="User" id="UserResultMap2">
+        <id property="id" column="id"/>
+        <result property="userName" column="userName"/>
+        <result property="sex" column="sex"/>
+        <result property="birthday" column="birthday"/>
+        <result property="address" column="address"/>
+        <result property="createtime" column="createtime"/>
+        <!-- ofType指定items集合中的对象类型 -->
+        <collection property="items" ofType="Items">
+            <id property="id" column="id"/>
+            <result property="itemName" column="itemName"/>
+            <result property="price" column="price"/>
+            <result property="detail" column="detail"/>
+            <result property="pic" column="pic"/>
+            <result property="createtime" column="createtime"/>
+        </collection>
+    </resultMap>
+    <!--
+	    方式二：嵌套查询：通过执行另外一个SQL映射语句来返回预期的复杂类型
+            SELECT * FROM user WHERE id=1;
+            SELECT * FROM items WHERE userId=1  //1是第一个查询得到的 id 字段的值
+    -->
+    <select id="getUserMany3" parameterType="int" resultMap="UserResultMap3">
+       SELECT * FROM user WHERE id = #{id}
+    </select>
+    <select id="getItem" parameterType="int" resultType="Items">
+        SELECT * FROM Items WHERE userId=#{id}
+    </select>
+    <resultMap type="User" id="UserResultMap3">
+        <id property="id" column="id"/>
+        <result property="userName" column="userName"/>
+        <result property="sex" column="sex"/>
+        <result property="birthday" column="birthday"/>
+        <result property="address" column="address"/>
+        <result property="createtime" column="createtime"/>
+        <!--此处 column 是 user 的 id-->
+        <collection property="items" ofType="Items" column="id" select="getItem"></collection>
+    </resultMap>
+
 </mapper>

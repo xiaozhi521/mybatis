@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <!-- mybatis文档   http://www.mybatis.org/mybatis-3/zh/ -->
     <!-- 文件的配置顺序 -->
     <!--
         properties, settings, typeAliases, typeHandlers, objectFactory, objectWrapperFactory,
@@ -11,6 +12,11 @@
 
     <!-- 引用db.properties配置文件 -->
     <properties resource="db.properties"/>
+
+    <settings>
+        <!-- 打印查询语句 -->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
 
     <!-- 配置实体类的别名，配置实体类别名的目的是为了在引用实体类时可以使用实体类的别名来代替实体类，达到简写的目的 -->
     <typeAliases>
@@ -47,7 +53,6 @@
         第二种：使用包资源   package
                 <package name="com.org.dao"></package>
     -->
-
     <mappers>
         <mapper resource="com/org/mapper/userMapper.xml"/>
         <mapper resource="com/org/mapper/ContactInformationMapper.xml"/>

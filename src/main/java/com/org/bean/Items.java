@@ -3,12 +3,12 @@ package com.org.bean;
 import java.util.Date;
 
 /**
- *
+ * 商品类
  */
 public class Items {
     private Integer id;
 
-    private String name;
+    private String itemName;
 
     private Double price;
 
@@ -18,7 +18,7 @@ public class Items {
 
     private Date createtime;
 
-    private User user;
+//    private User user;
 
     public Integer getId() {
         return id;
@@ -28,12 +28,12 @@ public class Items {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public Double getPrice() {
@@ -68,24 +68,24 @@ public class Items {
         this.createtime = createtime;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 
     @Override
     public String toString() {
         return "Items{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + itemName + '\'' +
                 ", price=" + price +
                 ", detail='" + detail + '\'' +
                 ", pic='" + pic + '\'' +
                 ", createtime=" + createtime +
-                ", user=" + user +
+//                ", user=" + user +
                 '}';
     }
 }
