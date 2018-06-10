@@ -2,7 +2,6 @@ package com.cn;
 
 import com.org.bean.ConditionItems;
 import com.org.bean.Items;
-import com.org.dao.UserMapper;
 import com.org.util.SessionFactoryUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;

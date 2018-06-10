@@ -114,5 +114,9 @@ public class UserTest {
         //执行查询返回一个唯一user对象的sql
         User user = session.selectOne(statement, 1);
         System.out.println(user);
+
+        session.clearCache();
+        user = session.selectOne(statement, 1);
+        System.out.println(user);
     }
 }
