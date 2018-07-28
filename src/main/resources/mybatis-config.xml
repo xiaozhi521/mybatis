@@ -21,13 +21,23 @@
     <!-- 配置实体类的别名，配置实体类别名的目的是为了在引用实体类时可以使用实体类的别名来代替实体类，达到简写的目的 -->
     <typeAliases>
         <!--  第一种方式 ： 为实体类com.org.bean.User配置一个别名_User -->
-        <!-- <typeAlias type="com.org.bean.User" alias="_User"/> -->
+        <!-- <typeAlias typeHandler="com.org.bean.User" alias="_User"/> -->
 
         <!-- 第二种方式 ：   为org.bean包下的所有实体类配置别名，MyBatis默认的设置别名的方式就是去除类所在的包后的简单的类名-->
         <!--比如com.org.bean.User 这个实体类的别名就会被设置成 User -->
         <package name="com.org.bean"/>
     </typeAliases>
 
+    <!--配置自定义的typeHandler, com.org.typeHandler.MyTypeStringHandlerandler-->
+    <!--配置typeHandler-->
+    <!--<typeHandlers>-->
+        <!--<typeHandler handler="com.org.typeHandler.MyTypeStringHandler" javaType="string" jdbcType="VARCHAR"/>-->
+        <!--<typeHandler handler="com.org.typeHandler.MyTypeIntegerHandler" javaType="int" jdbcType="INTEGER"/>-->
+    <!--</typeHandlers>-->
+    <!--使用扫描方式配置typeHandler-->
+    <typeHandlers>
+        <package name="com.org.typeHandler"/>
+    </typeHandlers>
     <!--
         development : 开发模式
         work : 工作模式

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.org.mapper.ContactInformationMapper">
+<mapper namespace="com.org.dao.ContactInformationMapper">
     <!--5、解决字段名与实体类属性名不相同的冲突-->
     <!--方式一: 通过在sql语句中定义别名-->
     <select id="getContactInformationrById" parameterType="int" resultType="ContactInformation">
@@ -11,9 +11,19 @@
         select * from contactinformation where c_id = #{id}
     </select>
     <resultMap id="informationResultMap" type="ContactInformation">
-        <id property="id" column="c_id"/>
-        <result property="tel" column="c_tel"/>
-        <result property="email" column="c_email"/>
+        <id property="id" column="c_id" typeHandler="com.org.typeHandler.MyTypeIntegerHandler"/>
+        <result property="tel" column="c_tel" jdbcType="VARCHAR" javaType="string"/>
+        <result property="email" column="c_email" typeHandler="com.org.typeHandler.MyTypeStringHandler"/>
+        <!--<result property="user" column="user_id"/>-->
+    </resultMap>
+    <!--方式二: 通过<resultMap> 测试typeHandler 扫描组件方式-->
+    <select id="getContactInformationrById_2" parameterType="int" resultMap="informationResultMap0">
+        select * from contactinformation where c_id = #{id}
+    </select>
+    <resultMap id="informationResultMap0" type="ContactInformation">
+        <id property="id" column="c_id" typeHandler="com.org.typeHandler.MyTypeIntegerHandlerScan"/>
+        <result property="tel" column="c_tel" jdbcType="VARCHAR" javaType="string"/>
+        <result property="email" column="c_email" typeHandler="com.org.typeHandler.MyTypeStringHandlerScan"/>
         <!--<result property="user" column="user_id"/>-->
     </resultMap>
     <!--    6.1、一对一关联

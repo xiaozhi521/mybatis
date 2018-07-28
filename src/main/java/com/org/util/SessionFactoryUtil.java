@@ -9,10 +9,12 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
+import sun.security.provider.MD5;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.util.Properties;
 
 public class SessionFactoryUtil {
     public static SqlSessionFactory getSession() throws IOException {
@@ -56,7 +58,33 @@ public class SessionFactoryUtil {
         //使用 SqlSessionFactoryBuilder 构建 SqlSessionFactory
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
         return sqlSessionFactory;
-
     }
+
+    /**
+     *  使用程序传递方式传递参数
+     *  j解密用户名 密码 连接数据库
+     * @return
+     */
+    public static SqlSessionFactory getSession3() throws IOException {
+        SqlSessionFactory sqlSessionFactory = null;
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = null;
+        InputStream in = Resources.getResourceAsStream("db.properties");
+        Properties properties = new Properties();
+        try {
+            properties.load(in);
+            String userName = properties.getProperty("name");
+            String password = properties.getProperty("password");
+            //解密用户和密码，并在属性中重置
+//            properties.put("name", CodeUtil.decode(userName));
+//            properties.put("password", CodeUtil.decode(password));
+            inputStream = Resources.getResourceAsStream(resource);
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream,properties);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sqlSessionFactory;
+    }
+
 
 }
