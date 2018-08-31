@@ -1,5 +1,6 @@
 package com.org.util;
 
+import com.org.typeHandler.MyTypeIntegerHandler;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.mapping.Environment;
@@ -53,6 +54,8 @@ public class SessionFactoryUtil {
         Configuration configuration = new Configuration(environment);
         //注册一个MyBatis 上下文别名
         configuration.getTypeAliasRegistry().registerAliases("com.org.bean");
+        //注册自定义typeHandler
+//        configuration.getTypeHandlerRegistry().register("com.org.typeHandler");
         //加入一个映射器
         configuration.addMappers("com.org.dao");
         //使用 SqlSessionFactoryBuilder 构建 SqlSessionFactory
