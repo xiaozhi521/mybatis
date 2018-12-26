@@ -1,6 +1,6 @@
-mybatis提供对SQL语句动态的组装能力，使用XML的几个简单的元素，便能完成动态sql的功能。
+**mybatis提供对SQL语句动态的组装能力，使用XML的几个简单的元素，便能完成动态sql的功能。**
 
-大量的判断都可以在 MyBatis 的映射XML里面配置，以达到许多需要大量代码才能实现的功能。
+**大量的判断都可以在 MyBatis 的映射XML里面配置，以达到许多需要大量代码才能实现的功能。**
 #### if 元素
     <select id="seachKeyWord" parameterType="ConditionItems" resultType="Items">
          select * from Items
